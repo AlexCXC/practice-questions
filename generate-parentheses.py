@@ -1,25 +1,23 @@
 class Solution:
 
-    def can_add_left(self, s, n):
-        s = list(s)
-        if s.count('(') >= n:
-            return False
-        
-
-    def can_add_right(self, s, n):
-        s = list(s)
-        if s.count(')') >= n:
-            return False
+    def func(self, s, st):
+        if len(s) == 2 * self.n:
+            self.results.append(s)
+            return
+        if 0 <= st < self.n and s.count('(') < self.n:
+            self.func(s+'(', st+1)
+        if st > 0:
+            self.func(s+')', st-1)
 
     def generateParenthesis(self, n: int):
-        results, results_set = [], set()
-        stack, flags = ['('], {'('}
-        while stack:
-            top = stack.pop()
-            if len(top) == n * 2 and top not in results_set:
-                results.append(top)
-                results_set.add(top)
-                continue
-            # whether can add '(' and stack in
+        if n == 1:
+            return ['()']
+        self.n = n
+        s, st = '(', 1
+        self.results = []
+        self.func(s, st)
+        return self.results
 
-            # whether can add ')' and stack in
+
+if __name__ == '__main__':
+    print(Solution().generateParenthesis(2))
